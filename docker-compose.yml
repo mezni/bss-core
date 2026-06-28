@@ -1,0 +1,68 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgis/postgis:15-3.4
+    container_name: bornemap-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: bornemap
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  auth-service:
+    container_name: auth-service
+    build: ./backend/auth-service
+    ports:
+      - "3001:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/bornemap
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  admin-service:
+    container_name: admin-service
+    build: ./backend/admin-service
+    ports:
+      - "3002:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/bornemap
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  driver-service:
+    container_name: driver-service
+    build: ./backend/driver-service
+    ports:
+      - "3003:3000"
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/bornemap
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+
+  admin-dashboard:
+    container_name: admin-dashboard
+    build: ./frontend/admin-dashboard
+    ports:
+      - "9001:5173"
+
+  driver-web:
+    container_name: driver-web
+    build: ./frontend/driver-web
+    ports:
+      - "9002:5173"
