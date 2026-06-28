@@ -1,1 +1,2 @@
-// Infrastructure layer — DB repositories, external integrations
+pub mod db;
+pub mod repositories;

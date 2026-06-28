@@ -1,1 +1,3 @@
-// Domain layer — entities, value objects, business rules
+pub mod entities;
+pub mod repositories;
+pub mod value_objects;
