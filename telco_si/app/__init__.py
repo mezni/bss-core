@@ -1,1 +1,0 @@
-"""Telco SI application package."""
