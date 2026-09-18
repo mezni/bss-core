@@ -1,0 +1,10 @@
+[project]
+name = "ai-project-bluegen"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=1.4.2",
+    "langchain-openrouter>=0.2.8",
+    "pydantic>=2.12.5",
+    "python-dotenv>=1.2.3",
+]
