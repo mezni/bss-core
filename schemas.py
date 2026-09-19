@@ -22,3 +22,34 @@ class ProjectBlueprint(BaseModel):
             raise ValueError("Value cannot be empty.")
 
         return value
+
+
+class GenerateBlueprintRequest(BaseModel):
+    project_idea: str = Field(
+        description="The high-level idea describing the AI project."
+    )
+
+    @field_validator("project_idea")
+    @classmethod
+    def validate_project_idea(cls, value: str) -> str:
+        value = value.strip()
+
+        if not value:
+            raise ValueError("Project idea cannot be empty.")
+
+        return value
+
+
+class GenerationTelemetryResponse(BaseModel):
+    request_id: str
+    model: str
+    prompt_version: str
+    latency_seconds: float
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    total_tokens: int | None = None
+
+
+class GenerateBlueprintResponse(BaseModel):
+    blueprint: ProjectBlueprint
+    telemetry: GenerationTelemetryResponse

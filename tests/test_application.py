@@ -1,6 +1,6 @@
 from application import create_application
 from interfaces import ProjectGeneratorInterface
-from schemas import ProjectBlueprint
+from schemas import GenerateBlueprintRequest, ProjectBlueprint
 from telemetry import GenerationResult, GenerationTelemetry
 
 
@@ -25,9 +25,11 @@ def test_create_application_with_custom_generator() -> None:
         generator=FakeProjectGenerator()
     )
 
-    result = application.generate_blueprint(
-        "Build an AI document classifier."
+    request = GenerateBlueprintRequest(
+        project_idea="Build an AI document classifier."
     )
+
+    result = application.generate_blueprint(request)
 
     assert result.blueprint.project_name == "Test Project"
     assert result.telemetry.request_id == "test-request"

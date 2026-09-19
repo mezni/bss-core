@@ -1,33 +1,56 @@
 import pytest
 from pydantic import ValidationError
 
-from schemas import ProjectBlueprint
+from schemas import (
+    GenerateBlueprintRequest,
+    GenerateBlueprintResponse,
+    GenerationTelemetryResponse,
+    ProjectBlueprint,
+)
 
 
-def test_project_blueprint_accepts_valid_data() -> None:
-    blueprint = ProjectBlueprint(
-        project_name="Document Classification System",
-        business_outcome="Reduce manual document classification effort.",
+def test_generate_blueprint_request() -> None:
+    request = GenerateBlueprintRequest(
+        project_idea="Build an AI document classifier."
     )
 
-    assert blueprint.project_name == "Document Classification System"
-    assert (
-        blueprint.business_outcome
-        == "Reduce manual document classification effort."
+    assert request.project_idea == (
+        "Build an AI document classifier."
     )
 
 
-def test_project_blueprint_rejects_empty_project_name() -> None:
+def test_generate_blueprint_request_strips_whitespace() -> None:
+    request = GenerateBlueprintRequest(
+        project_idea="   Build an AI document classifier.   "
+    )
+
+    assert request.project_idea == (
+        "Build an AI document classifier."
+    )
+
+
+def test_generate_blueprint_request_rejects_empty_input() -> None:
     with pytest.raises(ValidationError):
-        ProjectBlueprint(
-            project_name="   ",
-            business_outcome="Reduce manual classification effort.",
+        GenerateBlueprintRequest(
+            project_idea="   "
         )
 
 
-def test_project_blueprint_rejects_empty_business_outcome() -> None:
-    with pytest.raises(ValidationError):
-        ProjectBlueprint(
-            project_name="Document Classification System",
-            business_outcome="   ",
-        )
+def test_generate_blueprint_response() -> None:
+    response = GenerateBlueprintResponse(
+        blueprint=ProjectBlueprint(
+            project_name="Document Classifier",
+            business_outcome=(
+                "Automatically classify corporate documents."
+            ),
+        ),
+        telemetry=GenerationTelemetryResponse(
+            request_id="test-request",
+            model="openai/gpt-4o-mini",
+            prompt_version="v1",
+            latency_seconds=0.5,
+        ),
+    )
+
+    assert response.blueprint.project_name == "Document Classifier"
+    assert response.telemetry.prompt_version == "v1"
