@@ -2,9 +2,12 @@ import sys
 
 from exceptions import ProjectGenerationError
 from generator import ProjectGenerator
+from logging_config import configure_logging
 
 
 def main() -> None:
+    configure_logging()
+
     if len(sys.argv) < 2:
         raise SystemExit(
             'Usage: uv run python app.py "<project idea>"'
