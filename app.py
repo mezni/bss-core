@@ -3,6 +3,7 @@ import sys
 from exceptions import ProjectGenerationError
 from generator import ProjectGenerator
 from logging_config import configure_logging
+from service import ProjectBlueprintService
 
 
 def main() -> None:
@@ -17,7 +18,9 @@ def main() -> None:
 
     try:
         generator = ProjectGenerator()
-        result = generator.generate(project_idea)
+        service = ProjectBlueprintService(generator)
+
+        result = service.generate_blueprint(project_idea)
 
     except ValueError as exc:
         raise SystemExit(f"Input error: {exc}") from exc
