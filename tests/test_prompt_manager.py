@@ -18,3 +18,9 @@ def test_prompt_manager_builds_user_prompt() -> None:
     )
 
     assert "Build an AI document classifier." in prompt
+
+
+def test_prompt_manager_returns_version() -> None:
+    manager = PromptManager()
+
+    assert manager.get_version() == "v1"
