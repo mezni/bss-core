@@ -1,17 +1,14 @@
-from schemas import ProjectBlueprint
+from generator import ProjectGenerator
 
 
 def main() -> None:
-    blueprint = ProjectBlueprint(
-        project_name=" ",
-        business_outcome=(
-            "Automatically classify corporate documents into "
-            "appropriate security categories."
-        ),
+    generator = ProjectGenerator()
+
+    result = generator.generate(
+        "Build an AI system that classifies corporate documents."
     )
 
-    print(blueprint)
-    print(blueprint.model_dump())
+    print(result)
 
 
 if __name__ == "__main__":
