@@ -3,7 +3,7 @@ from schemas import ProjectBlueprint
 
 def main() -> None:
     blueprint = ProjectBlueprint(
-        project_name="Corporate Document Classification System",
+        project_name=" ",
         business_outcome=(
             "Automatically classify corporate documents into "
             "appropriate security categories."
