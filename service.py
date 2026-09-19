@@ -1,9 +1,12 @@
-from generator import ProjectGenerator
+from interfaces import ProjectGeneratorInterface
 from telemetry import GenerationResult
 
 
 class ProjectBlueprintService:
-    def __init__(self, generator: ProjectGenerator) -> None:
+    def __init__(
+        self,
+        generator: ProjectGeneratorInterface,
+    ) -> None:
         self.generator = generator
 
     def generate_blueprint(

@@ -1,9 +1,10 @@
+from interfaces import ProjectGeneratorInterface
 from schemas import ProjectBlueprint
 from service import ProjectBlueprintService
 from telemetry import GenerationResult, GenerationTelemetry
 
 
-class FakeProjectGenerator:
+class FakeProjectGenerator(ProjectGeneratorInterface):
     def generate(self, project_idea: str) -> GenerationResult:
         return GenerationResult(
             blueprint=ProjectBlueprint(
@@ -27,8 +28,5 @@ def test_service_generates_blueprint() -> None:
     )
 
     assert result.blueprint.project_name == "Test Project"
-    assert (
-        result.blueprint.business_outcome
-        == "Test business outcome."
-    )
+    assert result.blueprint.business_outcome == "Test business outcome."
     assert result.telemetry.request_id == "test-request"
