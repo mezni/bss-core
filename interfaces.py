@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from schemas import ProjectBlueprint
 from telemetry import GenerationResult
 
 
@@ -10,8 +11,17 @@ class ProjectGeneratorInterface(ABC):
         raise NotImplementedError
 
 
-class LLMInterface(ABC):
+class StructuredLLMInterface(ABC):
+    @property
     @abstractmethod
-    def invoke(self, messages):
-        """Invoke the language model."""
+    def model_name(self) -> str:
+        """Return the configured model name."""
+        raise NotImplementedError
+
+    @abstractmethod
+    def generate(
+        self,
+        messages: list[tuple[str, str]],
+    ) -> ProjectBlueprint:
+        """Generate a structured project blueprint."""
         raise NotImplementedError

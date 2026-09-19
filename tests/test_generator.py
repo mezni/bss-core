@@ -18,4 +18,5 @@ def test_generator_uses_injected_llm() -> None:
         result.blueprint.business_outcome
         == "Test business outcome."
     )
+    assert result.telemetry.model == "fake-model"
     assert result.telemetry.prompt_version == "v1"
