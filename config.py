@@ -2,9 +2,20 @@ from pathlib import Path
 
 import yaml
 from pydantic import BaseModel, Field
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 CONFIG_PATH = Path("config/llm.yaml")
+
+
+class Settings(BaseSettings):
+    openrouter_api_key: str = Field(min_length=1)
+
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
 
 class LLMConfig(BaseModel):
@@ -13,6 +24,10 @@ class LLMConfig(BaseModel):
     model: str
     temperature: float = Field(ge=0.0, le=2.0)
     max_tokens: int = Field(gt=0)
+
+
+def load_settings() -> Settings:
+    return Settings()
 
 
 def load_llm_config() -> LLMConfig:
