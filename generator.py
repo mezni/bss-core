@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from pydantic import SecretStr
+from schemas import ProjectBlueprint
 
 from prompts import SYSTEM_PROMPT, build_user_prompt
 
@@ -23,10 +24,14 @@ class ProjectGenerator:
             api_key=SecretStr(api_key),
         )
 
-    def generate(self, project_idea: str) -> str:
+        self.structured_llm = self.llm.with_structured_output(
+            ProjectBlueprint
+        )
+
+    def generate(self, project_idea: str) -> ProjectBlueprint:
         messages = [
             ("system", SYSTEM_PROMPT),
             ("human", build_user_prompt(project_idea)),
         ]
-        response = self.llm.invoke(messages)
-        return response.content
+        response = self.structured_llm.invoke(messages)
+        return response
