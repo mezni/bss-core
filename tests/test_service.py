@@ -14,6 +14,7 @@ class FakeProjectGenerator(ProjectGeneratorInterface):
             telemetry=GenerationTelemetry(
                 request_id="test-request",
                 model="test-model",
+                prompt_version="v1",
                 latency_seconds=0.1,
             ),
         )

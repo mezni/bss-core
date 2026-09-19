@@ -7,6 +7,7 @@ from schemas import ProjectBlueprint
 class GenerationTelemetry:
     request_id: str
     model: str
+    prompt_version: str
     latency_seconds: float
     input_tokens: int | None = None
     output_tokens: int | None = None
