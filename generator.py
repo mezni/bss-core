@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
+from prompts import SYSTEM_PROMPT, build_user_prompt
+
 
 load_dotenv()
 
@@ -21,13 +23,16 @@ class ProjectGenerator:
 
     def generate(self, project_idea: str) -> str:
         response = self.client.chat.completions.create(
-#            model="openai/gpt-4o-mini",
             model="nvidia/nemotron-3-ultra-550b-a55b:free",
             messages=[
                 {
+                    "role": "system",
+                    "content": SYSTEM_PROMPT,
+                },
+                {
                     "role": "user",
-                    "content": project_idea,
-                }
+                    "content": build_user_prompt(project_idea),
+                },
             ],
         )
 
