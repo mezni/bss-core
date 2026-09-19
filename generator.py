@@ -1,6 +1,7 @@
 from langchain_openai import ChatOpenAI
 
 from config import load_llm_config, load_settings
+from exceptions import ProjectGenerationError
 from prompts import SYSTEM_PROMPT, build_user_prompt
 from schemas import ProjectBlueprint
 
@@ -33,4 +34,10 @@ class ProjectGenerator:
             ("human", build_user_prompt(project_idea)),
         ]
 
-        return self.structured_llm.invoke(messages)
+        try:
+            return self.structured_llm.invoke(messages)
+
+        except Exception as exc:
+            raise ProjectGenerationError(
+                "Failed to generate the project blueprint."
+            ) from exc
