@@ -1,5 +1,17 @@
+from schemas import ProjectBlueprint
+
+
 def main() -> None:
-    print("AI Project Blueprint Generator")
+    blueprint = ProjectBlueprint(
+        project_name="Corporate Document Classification System",
+        business_outcome=(
+            "Automatically classify corporate documents into "
+            "appropriate security categories."
+        ),
+    )
+
+    print(blueprint)
+    print(blueprint.model_dump())
 
 
 if __name__ == "__main__":
