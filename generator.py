@@ -29,9 +29,20 @@ class ProjectGenerator:
         )
 
     def generate(self, project_idea: str) -> ProjectBlueprint:
+        project_idea = project_idea.strip()
+
+        if not project_idea:
+            raise ValueError("Project idea cannot be empty.")
+
         messages = [
-            ("system", SYSTEM_PROMPT),
-            ("human", build_user_prompt(project_idea)),
+            (
+                "system",
+                SYSTEM_PROMPT,
+            ),
+            (
+                "human",
+                build_user_prompt(project_idea),
+            ),
         ]
-        response = self.structured_llm.invoke(messages)
-        return response
+
+        return self.structured_llm.invoke(messages)
