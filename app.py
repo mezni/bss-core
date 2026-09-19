@@ -17,7 +17,7 @@ def main() -> None:
 
     try:
         generator = ProjectGenerator()
-        blueprint = generator.generate(project_idea)
+        result = generator.generate(project_idea)
 
     except ValueError as exc:
         raise SystemExit(f"Input error: {exc}") from exc
@@ -26,9 +26,12 @@ def main() -> None:
         raise SystemExit(f"Generation error: {exc}") from exc
 
     print()
-    print(f"Project Name: {blueprint.project_name}")
+    print(f"Project Name: {result.blueprint.project_name}")
     print()
-    print(f"Business Outcome: {blueprint.business_outcome}")
+    print(f"Business Outcome: {result.blueprint.business_outcome}")
+    print()
+    print(f"Request ID: {result.telemetry.request_id}")
+    print(f"Latency: {result.telemetry.latency_seconds:.3f}s")
 
 
 if __name__ == "__main__":
