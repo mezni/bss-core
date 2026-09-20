@@ -1,14 +1,16 @@
 from langchain_openai import ChatOpenAI
 
-from config import load_llm_config, load_settings
+from config import LLMConfig, Settings
 from interfaces import StructuredLLMInterface
 from schemas import ProjectBlueprint
 
 
 class LangChainStructuredLLM(StructuredLLMInterface):
-    def __init__(self) -> None:
-        settings = load_settings()
-        config = load_llm_config()
+    def __init__(
+        self,
+        config: LLMConfig,
+        settings: Settings,
+    ) -> None:
 
         self._model_name = config.model
 

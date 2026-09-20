@@ -1,3 +1,4 @@
+from config import load_llm_config, load_settings
 from generator import ProjectGenerator
 from interfaces import ProjectGeneratorInterface
 from schemas import (
@@ -6,6 +7,7 @@ from schemas import (
     GenerationTelemetryResponse,
 )
 from service import ProjectBlueprintService
+from structured_llm import LangChainStructuredLLM
 
 
 class Application:
@@ -45,8 +47,20 @@ def create_application(
 ) -> Application:
 
     if generator is None:
-        generator = ProjectGenerator()
+        settings = load_settings()
+        config = load_llm_config()
 
-    service = ProjectBlueprintService(generator)
+        llm = LangChainStructuredLLM(
+            config=config,
+            settings=settings,
+        )
+
+        generator = ProjectGenerator(
+            llm=llm,
+        )
+
+    service = ProjectBlueprintService(
+        generator
+    )
 
     return Application(service)
