@@ -1,6 +1,7 @@
 from config import load_llm_config, load_settings
 from generator import ProjectGenerator
 from interfaces import ProjectGeneratorInterface
+from prompt_manager import PromptManager
 from schemas import (
     GenerateBlueprintRequest,
     GenerateBlueprintResponse,
@@ -57,6 +58,7 @@ def create_application(
 
         generator = ProjectGenerator(
             llm=llm,
+            prompt_manager=PromptManager(),
         )
 
     service = ProjectBlueprintService(
