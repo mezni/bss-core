@@ -1,5 +1,34 @@
-from interfaces import PromptManagerInterface
+from context import RequestContext
+from interfaces import (
+    ProjectGeneratorInterface,
+    PromptManagerInterface,
+)
 from schemas import ProjectBlueprint
+from telemetry import GenerationResult, GenerationTelemetry
+
+
+class FakeProjectGenerator(ProjectGeneratorInterface):
+
+    def generate(
+        self,
+        project_idea: str,
+        context: RequestContext,
+    ) -> GenerationResult:
+
+        return GenerationResult(
+            blueprint=ProjectBlueprint(
+                project_name="Test Project",
+                business_outcome=(
+                    "Test business outcome."
+                ),
+            ),
+            telemetry=GenerationTelemetry(
+                request_id=context.request_id,
+                model="fake-model",
+                prompt_version="test-v1",
+                latency_seconds=0.01,
+            ),
+        )
 
 
 class FakeLLM:

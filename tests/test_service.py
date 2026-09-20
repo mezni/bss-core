@@ -1,33 +1,19 @@
-from interfaces import ProjectGeneratorInterface
-from schemas import ProjectBlueprint
+from context import RequestContext
 from service import ProjectBlueprintService
-from telemetry import GenerationResult, GenerationTelemetry
-
-
-class FakeProjectGenerator(ProjectGeneratorInterface):
-    def generate(self, project_idea: str) -> GenerationResult:
-        return GenerationResult(
-            blueprint=ProjectBlueprint(
-                project_name="Test Project",
-                business_outcome="Test business outcome.",
-            ),
-            telemetry=GenerationTelemetry(
-                request_id="test-request",
-                model="test-model",
-                prompt_version="v1",
-                latency_seconds=0.1,
-            ),
-        )
+from tests.fakes import FakeProjectGenerator
 
 
 def test_service_generates_blueprint() -> None:
     generator = FakeProjectGenerator()
     service = ProjectBlueprintService(generator)
 
+    context = RequestContext.create()
+
     result = service.generate_blueprint(
-        "Build an AI document classifier."
+        "Build an AI document classifier.",
+        context,
     )
 
     assert result.blueprint.project_name == "Test Project"
     assert result.blueprint.business_outcome == "Test business outcome."
-    assert result.telemetry.request_id == "test-request"
+    assert result.telemetry.request_id == context.request_id

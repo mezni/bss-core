@@ -1,14 +1,21 @@
 from abc import ABC, abstractmethod
 
+from context import RequestContext
 from schemas import ProjectBlueprint
 from telemetry import GenerationResult
 
 
 class ProjectGeneratorInterface(ABC):
+
     @abstractmethod
-    def generate(self, project_idea: str) -> GenerationResult:
+    def generate(
+        self,
+        project_idea: str,
+        context: RequestContext,
+    ) -> GenerationResult:
         """Generate a project blueprint."""
         raise NotImplementedError
+
 
 class StructuredLLMInterface(ABC):
 

@@ -1,25 +1,8 @@
 from application import create_application
 from config import LLMConfig, Settings
 from container import DependencyContainer
-from interfaces import ProjectGeneratorInterface
-from schemas import GenerateBlueprintRequest, ProjectBlueprint
-from telemetry import GenerationResult, GenerationTelemetry
-
-
-class FakeProjectGenerator(ProjectGeneratorInterface):
-    def generate(self, project_idea: str) -> GenerationResult:
-        return GenerationResult(
-            blueprint=ProjectBlueprint(
-                project_name="Test Project",
-                business_outcome="Test business outcome.",
-            ),
-            telemetry=GenerationTelemetry(
-                request_id="test-request",
-                model="test-model",
-                prompt_version="v1",
-                latency_seconds=0.1,
-            ),
-        )
+from schemas import GenerateBlueprintRequest
+from tests.fakes import FakeProjectGenerator
 
 
 def test_create_application_with_custom_generator() -> None:
@@ -48,4 +31,7 @@ def test_create_application_with_custom_generator() -> None:
     result = application.generate_blueprint(request)
 
     assert result.blueprint.project_name == "Test Project"
-    assert result.telemetry.request_id == "test-request"
+    assert result.telemetry.request_id
+    assert len(result.telemetry.request_id) == 36
+    assert result.telemetry.model == "fake-model"
+    assert result.telemetry.prompt_version == "test-v1"

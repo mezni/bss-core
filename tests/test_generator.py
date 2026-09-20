@@ -1,3 +1,4 @@
+from context import RequestContext
 from generator import ProjectGenerator
 from tests.fakes import FakeLLM, FakePromptManager
 
@@ -8,8 +9,11 @@ def test_generator_uses_injected_dependencies() -> None:
         prompt_manager=FakePromptManager(),
     )
 
+    context = RequestContext.create()
+
     result = generator.generate(
-        "Build an AI document classifier."
+        "Build an AI document classifier.",
+        context,
     )
 
     assert result.blueprint.project_name == "Test Project"
