@@ -1,3 +1,4 @@
+from interfaces import PromptManagerInterface
 from schemas import ProjectBlueprint
 
 
@@ -14,7 +15,7 @@ class FakeLLM:
         )
 
 
-class FakePromptManager:
+class FakePromptManager(PromptManagerInterface):
 
     def get_system_prompt(self) -> str:
         return "Fake system prompt."

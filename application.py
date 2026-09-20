@@ -56,9 +56,11 @@ def create_application(
             settings=settings,
         )
 
+        prompt_manager = PromptManager()
+
         generator = ProjectGenerator(
             llm=llm,
-            prompt_manager=PromptManager(),
+            prompt_manager=prompt_manager,
         )
 
     service = ProjectBlueprintService(
