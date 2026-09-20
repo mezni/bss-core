@@ -1,6 +1,7 @@
 import sys
 
 from application import create_application
+from logging_config import configure_logging
 from schemas import GenerateBlueprintRequest
 
 
@@ -34,6 +35,9 @@ class CLI:
 
 
 def main() -> None:
+
+    configure_logging()
+
     if len(sys.argv) < 2:
         raise SystemExit(
             'Usage: uv run python app.py "<project idea>"'
