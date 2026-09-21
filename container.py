@@ -1,4 +1,5 @@
 from config import LLMConfig, Settings
+from cost import CostCalculator, ModelPricing
 from generator import ProjectGenerator
 from interfaces import (
     ProjectGeneratorInterface,
@@ -44,17 +45,24 @@ class DependencyContainer:
 
         return InMemoryTelemetryRecorder()
 
+    def create_cost_calculator(self) -> CostCalculator:
+        return CostCalculator()
+
     def create_generator(
         self,
         llm: StructuredLLMInterface,
         prompt_manager: PromptManagerInterface,
         telemetry_recorder: TelemetryRecorderInterface,
+        cost_calculator: CostCalculator,
+        model_pricing: ModelPricing,
     ) -> ProjectGeneratorInterface:
 
         return ProjectGenerator(
             llm=llm,
             prompt_manager=prompt_manager,
             telemetry_recorder=telemetry_recorder,
+            cost_calculator=cost_calculator,
+            model_pricing=model_pricing,
         )
 
     def create_service(

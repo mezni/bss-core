@@ -1,7 +1,11 @@
 import pytest
 from pydantic import ValidationError
 
-from config import LLMConfig
+from config import (
+    LLMConfig,
+    load_llm_config,
+    load_pricing_config,
+)
 
 
 def test_llm_config_accepts_valid_configuration() -> None:
@@ -38,3 +42,16 @@ def test_llm_config_rejects_invalid_max_tokens() -> None:
             temperature=0.2,
             max_tokens=0,
         )
+
+
+def test_load_pricing_config() -> None:
+    config = load_pricing_config()
+
+    assert config.models
+
+
+def test_pricing_contains_configured_model() -> None:
+    llm_config = load_llm_config()
+    pricing_config = load_pricing_config()
+
+    assert llm_config.model in pricing_config.models

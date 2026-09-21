@@ -25,6 +25,9 @@ class GenerationEvent:
     input_tokens: int | None = None
     output_tokens: int | None = None
     total_tokens: int | None = None
+    input_cost: float | None = None
+    output_cost: float | None = None
+    total_cost: float | None = None
     error_type: str | None = None
 
 

@@ -1,4 +1,5 @@
 from context import RequestContext
+from cost import CostCalculator, ModelPricing
 from generator import ProjectGenerator
 from telemetry_recorder import InMemoryTelemetryRecorder
 from tests.fakes import FakeLLM, FakePromptManager
@@ -7,10 +8,17 @@ from tests.fakes import FakeLLM, FakePromptManager
 def test_generator_uses_injected_dependencies() -> None:
     recorder = InMemoryTelemetryRecorder()
 
+    pricing = ModelPricing(
+        input_cost_per_million_tokens=1.0,
+        output_cost_per_million_tokens=2.0,
+    )
+
     generator = ProjectGenerator(
         llm=FakeLLM(),
         prompt_manager=FakePromptManager(),
         telemetry_recorder=recorder,
+        cost_calculator=CostCalculator(),
+        model_pricing=pricing,
     )
 
     context = RequestContext.create()
@@ -50,3 +58,6 @@ def test_generator_uses_injected_dependencies() -> None:
     assert event.input_tokens == 100
     assert event.output_tokens == 50
     assert event.total_tokens == 150
+    assert event.input_cost == 0.0001
+    assert event.output_cost == 0.0001
+    assert event.total_cost == 0.0002
