@@ -1,38 +1,39 @@
-from telemetry import GenerationEvent
+from telemetry import TelemetryEvent
 
 
-def test_generation_event_contains_observability_data():
-    event = GenerationEvent(
+def test_telemetry_event_contains_observability_data():
+    event = TelemetryEvent(
         request_id="request-123",
+        event_type="generation",
         operation="project_blueprint_generation",
-        model="fake-model",
-        prompt_version="v1",
         status="success",
         latency_seconds=0.42,
+        model="fake-model",
+        prompt_version="v1",
         input_tokens=100,
         output_tokens=50,
         total_tokens=150,
+        total_cost=0.0002,
     )
 
     assert event.request_id == "request-123"
+    assert event.event_type == "generation"
     assert event.operation == "project_blueprint_generation"
-    assert event.model == "fake-model"
-    assert event.prompt_version == "v1"
     assert event.status == "success"
-    assert event.latency_seconds == 0.42
     assert event.total_tokens == 150
+    assert event.total_cost == 0.0002
 
 
-def test_generation_event_can_represent_failure():
-    event = GenerationEvent(
+def test_telemetry_event_can_represent_tool_call():
+    event = TelemetryEvent(
         request_id="request-456",
-        operation="project_blueprint_generation",
-        model="fake-model",
-        prompt_version="v1",
-        status="error",
-        latency_seconds=0.25,
-        error_type="ProjectGenerationError",
+        event_type="tool_call",
+        operation="customer_lookup",
+        status="success",
+        latency_seconds=0.15,
     )
 
-    assert event.status == "error"
-    assert event.error_type == "ProjectGenerationError"
+    assert event.event_type == "tool_call"
+    assert event.operation == "customer_lookup"
+    assert event.model is None
+    assert event.input_tokens is None

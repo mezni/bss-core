@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 from context import RequestContext
 from schemas import ProjectBlueprint
-from telemetry import GenerationEvent, GenerationResult
+from telemetry import GenerationResult, TelemetryEvent
 
 
 @dataclass(frozen=True)
@@ -68,7 +68,7 @@ class TelemetryRecorderInterface(ABC):
     @abstractmethod
     def record(
         self,
-        event: GenerationEvent,
+        event: TelemetryEvent,
     ) -> None:
         """Record an observability event."""
         raise NotImplementedError

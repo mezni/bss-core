@@ -1,17 +1,18 @@
-from telemetry import GenerationEvent
+from telemetry import TelemetryEvent
 from telemetry_recorder import InMemoryTelemetryRecorder
 
 
 def test_in_memory_recorder_stores_event():
     recorder = InMemoryTelemetryRecorder()
 
-    event = GenerationEvent(
+    event = TelemetryEvent(
         request_id="request-123",
+        event_type="generation",
         operation="project_blueprint_generation",
-        model="fake-model",
-        prompt_version="v1",
         status="success",
         latency_seconds=0.5,
+        model="fake-model",
+        prompt_version="v1",
     )
 
     recorder.record(event)

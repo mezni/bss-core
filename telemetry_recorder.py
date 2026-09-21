@@ -1,13 +1,13 @@
-from telemetry import GenerationEvent
+from telemetry import TelemetryEvent
 
 
 class InMemoryTelemetryRecorder:
 
     def __init__(self) -> None:
-        self.events: list[GenerationEvent] = []
+        self.events: list[TelemetryEvent] = []
 
     def record(
         self,
-        event: GenerationEvent,
+        event: TelemetryEvent,
     ) -> None:
         self.events.append(event)
