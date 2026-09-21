@@ -4,10 +4,12 @@ from interfaces import (
     ProjectGeneratorInterface,
     PromptManagerInterface,
     StructuredLLMInterface,
+    TelemetryRecorderInterface,
 )
 from prompt_manager import PromptManager
 from service import ProjectBlueprintService
 from structured_llm import LangChainStructuredLLM
+from telemetry_recorder import InMemoryTelemetryRecorder
 
 
 class DependencyContainer:
@@ -36,15 +38,23 @@ class DependencyContainer:
             settings=self.settings,
         )
 
+    def create_telemetry_recorder(
+        self,
+    ) -> TelemetryRecorderInterface:
+
+        return InMemoryTelemetryRecorder()
+
     def create_generator(
         self,
         llm: StructuredLLMInterface,
         prompt_manager: PromptManagerInterface,
+        telemetry_recorder: TelemetryRecorderInterface,
     ) -> ProjectGeneratorInterface:
 
         return ProjectGenerator(
             llm=llm,
             prompt_manager=prompt_manager,
+            telemetry_recorder=telemetry_recorder,
         )
 
     def create_service(

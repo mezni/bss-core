@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from context import RequestContext
 from schemas import ProjectBlueprint
-from telemetry import GenerationResult
+from telemetry import GenerationEvent, GenerationResult
 
 
 class ProjectGeneratorInterface(ABC):
@@ -52,4 +52,15 @@ class PromptManagerInterface(ABC):
     @abstractmethod
     def get_version(self) -> str:
         """Return the active prompt version."""
+        raise NotImplementedError
+
+
+class TelemetryRecorderInterface(ABC):
+
+    @abstractmethod
+    def record(
+        self,
+        event: GenerationEvent,
+    ) -> None:
+        """Record an observability event."""
         raise NotImplementedError
