@@ -6,6 +6,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 CONFIG_PATH = Path("config/llm.yaml")
+PRICING_CONFIG_PATH = Path("config/pricing.yaml")
 
 
 class Settings(BaseSettings):
@@ -26,6 +27,19 @@ class LLMConfig(BaseModel):
     max_tokens: int = Field(gt=0)
 
 
+class ModelPricingConfig(BaseModel):
+    input_cost_per_million_tokens: float = Field(
+        ge=0.0
+    )
+    output_cost_per_million_tokens: float = Field(
+        ge=0.0
+    )
+
+
+class PricingConfig(BaseModel):
+    models: dict[str, ModelPricingConfig]
+
+
 def load_settings() -> Settings:
     return Settings()
 
@@ -43,3 +57,24 @@ def load_llm_config() -> LLMConfig:
         raise ValueError("LLM configuration is empty.")
 
     return LLMConfig.model_validate(data)
+
+
+def load_pricing_config() -> PricingConfig:
+    if not PRICING_CONFIG_PATH.exists():
+        raise FileNotFoundError(
+            f"Pricing configuration not found: "
+            f"{PRICING_CONFIG_PATH}"
+        )
+
+    with PRICING_CONFIG_PATH.open(
+        "r",
+        encoding="utf-8",
+    ) as file:
+        data = yaml.safe_load(file)
+
+    if not data:
+        raise ValueError(
+            "Pricing configuration is empty."
+        )
+
+    return PricingConfig.model_validate(data)
