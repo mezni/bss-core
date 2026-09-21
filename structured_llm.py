@@ -1,7 +1,7 @@
 from langchain_openai import ChatOpenAI
 
 from config import LLMConfig, Settings
-from interfaces import StructuredLLMInterface
+from interfaces import LLMUsage, StructuredLLMInterface
 from schemas import ProjectBlueprint
 
 
@@ -23,7 +23,8 @@ class LangChainStructuredLLM(StructuredLLMInterface):
         )
 
         self.llm = llm.with_structured_output(
-            ProjectBlueprint
+            ProjectBlueprint,
+            include_raw=True,
         )
 
     @property
@@ -33,6 +34,26 @@ class LangChainStructuredLLM(StructuredLLMInterface):
     def generate(
         self,
         messages: list[tuple[str, str]],
-    ) -> ProjectBlueprint:
+    ) -> tuple[ProjectBlueprint, LLMUsage]:
 
-        return self.llm.invoke(messages)
+        response = self.llm.invoke(messages)
+
+        blueprint = response["parsed"]
+        raw_response = response["raw"]
+
+        usage_metadata = getattr(
+            raw_response,
+            "usage_metadata",
+            None,
+        )
+
+        if usage_metadata is None:
+            usage = LLMUsage()
+        else:
+            usage = LLMUsage(
+                input_tokens=usage_metadata.get("input_tokens"),
+                output_tokens=usage_metadata.get("output_tokens"),
+                total_tokens=usage_metadata.get("total_tokens"),
+            )
+
+        return blueprint, usage

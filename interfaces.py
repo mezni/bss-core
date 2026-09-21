@@ -1,8 +1,16 @@
 from abc import ABC, abstractmethod
+from dataclasses import dataclass
 
 from context import RequestContext
 from schemas import ProjectBlueprint
 from telemetry import GenerationEvent, GenerationResult
+
+
+@dataclass(frozen=True)
+class LLMUsage:
+    input_tokens: int | None = None
+    output_tokens: int | None = None
+    total_tokens: int | None = None
 
 
 class ProjectGeneratorInterface(ABC):
@@ -29,8 +37,8 @@ class StructuredLLMInterface(ABC):
     def generate(
         self,
         messages: list[tuple[str, str]],
-    ) -> ProjectBlueprint:
-        """Generate a structured project blueprint."""
+    ) -> tuple[ProjectBlueprint, LLMUsage]:
+        """Generate a structured project blueprint and usage."""
         raise NotImplementedError
 
 

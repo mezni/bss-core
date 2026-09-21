@@ -34,6 +34,10 @@ def test_generator_uses_injected_dependencies() -> None:
         == "test-v1"
     )
 
+    assert result.telemetry.input_tokens == 100
+    assert result.telemetry.output_tokens == 50
+    assert result.telemetry.total_tokens == 150
+
     assert len(recorder.events) == 1
 
     event = recorder.events[0]
@@ -43,3 +47,6 @@ def test_generator_uses_injected_dependencies() -> None:
     assert event.status == "success"
     assert event.model == "fake-model"
     assert event.prompt_version == "test-v1"
+    assert event.input_tokens == 100
+    assert event.output_tokens == 50
+    assert event.total_tokens == 150

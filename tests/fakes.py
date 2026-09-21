@@ -1,5 +1,6 @@
 from context import RequestContext
 from interfaces import (
+    LLMUsage,
     ProjectGeneratorInterface,
     PromptManagerInterface,
 )
@@ -38,9 +39,16 @@ class FakeLLM:
         return "fake-model"
 
     def generate(self, messages):
-        return ProjectBlueprint(
-            project_name="Test Project",
-            business_outcome="Test business outcome.",
+        return (
+            ProjectBlueprint(
+                project_name="Test Project",
+                business_outcome="Test business outcome.",
+            ),
+            LLMUsage(
+                input_tokens=100,
+                output_tokens=50,
+                total_tokens=150,
+            ),
         )
 
 
