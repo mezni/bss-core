@@ -7,6 +7,8 @@ def test_in_memory_recorder_stores_event():
 
     event = TelemetryEvent(
         request_id="request-123",
+        trace_id="trace-123",
+        span_id="span-123",
         event_type="generation",
         operation="project_blueprint_generation",
         status="success",

@@ -4,6 +4,8 @@ from telemetry import TelemetryEvent
 def test_telemetry_event_contains_observability_data():
     event = TelemetryEvent(
         request_id="request-123",
+        trace_id="trace-123",
+        span_id="span-123",
         event_type="generation",
         operation="project_blueprint_generation",
         status="success",
@@ -17,6 +19,8 @@ def test_telemetry_event_contains_observability_data():
     )
 
     assert event.request_id == "request-123"
+    assert event.trace_id == "trace-123"
+    assert event.span_id == "span-123"
     assert event.event_type == "generation"
     assert event.operation == "project_blueprint_generation"
     assert event.status == "success"
@@ -27,6 +31,8 @@ def test_telemetry_event_contains_observability_data():
 def test_telemetry_event_can_represent_tool_call():
     event = TelemetryEvent(
         request_id="request-456",
+        trace_id="trace-456",
+        span_id="span-456",
         event_type="tool_call",
         operation="customer_lookup",
         status="success",

@@ -17,6 +17,9 @@ class GenerationTelemetry:
 @dataclass(frozen=True)
 class TelemetryEvent:
     request_id: str
+    trace_id: str
+    span_id: str
+
     event_type: str
     operation: str
     status: str
