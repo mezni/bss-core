@@ -19,6 +19,7 @@ class TelemetryEvent:
     request_id: str
     trace_id: str
     span_id: str
+    parent_span_id: str | None
 
     event_type: str
     operation: str
