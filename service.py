@@ -1,6 +1,6 @@
-from context import RequestContext
 from interfaces import ProjectGeneratorInterface
 from telemetry import GenerationResult
+from tracing import TraceContext
 
 
 class ProjectBlueprintService:
@@ -15,10 +15,10 @@ class ProjectBlueprintService:
     def generate_blueprint(
         self,
         project_idea: str,
-        context: RequestContext,
+        trace: TraceContext,
     ) -> GenerationResult:
 
         return self.generator.generate(
             project_idea,
-            context,
+            trace,
         )

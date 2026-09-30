@@ -1,6 +1,8 @@
 from context import RequestContext
 from service import ProjectBlueprintService
+from telemetry_recorder import InMemoryTelemetryRecorder
 from tests.fakes import FakeProjectGenerator
+from tracing import TraceContext
 
 
 def test_service_generates_blueprint() -> None:
@@ -9,9 +11,14 @@ def test_service_generates_blueprint() -> None:
 
     context = RequestContext.create()
 
+    trace = TraceContext(
+        context=context,
+        recorder=InMemoryTelemetryRecorder(),
+    )
+
     result = service.generate_blueprint(
         "Build an AI document classifier.",
-        context,
+        trace,
     )
 
     assert result.blueprint.project_name == "Test Project"

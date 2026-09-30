@@ -1,9 +1,12 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
-from context import RequestContext
 from schemas import ProjectBlueprint
 from telemetry import GenerationResult, TelemetryEvent
+
+if TYPE_CHECKING:
+    from tracing import TraceContext
 
 
 @dataclass(frozen=True)
@@ -19,7 +22,7 @@ class ProjectGeneratorInterface(ABC):
     def generate(
         self,
         project_idea: str,
-        context: RequestContext,
+        trace: "TraceContext",
     ) -> GenerationResult:
         """Generate a project blueprint."""
         raise NotImplementedError

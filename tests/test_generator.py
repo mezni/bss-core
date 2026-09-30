@@ -3,6 +3,7 @@ from cost import CostCalculator, ModelPricing
 from generator import ProjectGenerator
 from telemetry_recorder import InMemoryTelemetryRecorder
 from tests.fakes import FakeLLM, FakePromptManager
+from tracing import TraceContext
 
 
 def test_generator_uses_injected_dependencies() -> None:
@@ -23,9 +24,14 @@ def test_generator_uses_injected_dependencies() -> None:
 
     context = RequestContext.create()
 
+    trace = TraceContext(
+        context=context,
+        recorder=recorder,
+    )
+
     result = generator.generate(
         "Build an AI document classifier.",
-        context,
+        trace,
     )
 
     assert result.blueprint.project_name == "Test Project"

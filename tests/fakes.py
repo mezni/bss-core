@@ -1,4 +1,3 @@
-from context import RequestContext
 from interfaces import (
     LLMUsage,
     ProjectGeneratorInterface,
@@ -6,6 +5,7 @@ from interfaces import (
 )
 from schemas import ProjectBlueprint
 from telemetry import GenerationResult, GenerationTelemetry
+from tracing import TraceContext
 
 
 class FakeProjectGenerator(ProjectGeneratorInterface):
@@ -13,7 +13,7 @@ class FakeProjectGenerator(ProjectGeneratorInterface):
     def generate(
         self,
         project_idea: str,
-        context: RequestContext,
+        trace: TraceContext,
     ) -> GenerationResult:
 
         return GenerationResult(
@@ -24,7 +24,7 @@ class FakeProjectGenerator(ProjectGeneratorInterface):
                 ),
             ),
             telemetry=GenerationTelemetry(
-                request_id=context.request_id,
+                request_id=trace.context.request_id,
                 model="fake-model",
                 prompt_version="test-v1",
                 latency_seconds=0.01,
