@@ -39,6 +39,7 @@ class TelemetryEvent:
     total_cost: float | None = None
 
     error_type: str | None = None
+    error_category: str | None = None
 
     attributes: dict[str, Any] | None = None
 
