@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
 
+from errors import ErrorCategories
 from failure import Failure
 
 
@@ -26,13 +27,13 @@ class RecoveryStrategy:
         self,
         failure: Failure,
     ) -> RecoveryDecision:
-        if failure.category.value == "timeout":
+        if failure.category == ErrorCategories.TIMEOUT:
             return RecoveryDecision(
                 action=RecoveryAction.FALLBACK,
                 reason="Timeout failure requires fallback.",
             )
 
-        if failure.category.value == "llm":
+        if failure.category == ErrorCategories.LLM:
             return RecoveryDecision(
                 action=RecoveryAction.ESCALATE,
                 reason="LLM failure requires escalation.",
