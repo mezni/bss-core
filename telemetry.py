@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Any
 
 from schemas import ProjectBlueprint
 
@@ -38,6 +39,8 @@ class TelemetryEvent:
     total_cost: float | None = None
 
     error_type: str | None = None
+
+    attributes: dict[str, Any] | None = None
 
 
 @dataclass(frozen=True)
