@@ -1,10 +1,71 @@
+# ==========================================
+# uv & Python Virtual Environments
+# ==========================================
 .venv/
+venv/
+ENV/
+env/
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
+
+# ==========================================
+# Notebooks Directory Rules
+# ==========================================
+# Ignore all Jupyter checkpoints everywhere (including inside notebooks/)
+.ipynb_checkpoints/
+**/notebooks/.ipynb_checkpoints/
+
+# Optional: Ignore generated outputs/exports (PDFs, HTML exports)
+notebooks/*.html
+notebooks/*.pdf
+
+# Optional: Ignore temporary data files placed inside notebooks/
+notebooks/*.csv
+notebooks/*.json
+notebooks/data/
+
+# Virtual environment kernels created for Jupyter
+share/jupyter/runtime/
+
+# ==========================================
+# Project & Data Exclusions
+# ==========================================
+# Ignore large dataset files
+*.csv
+*.parquet
+*.sqlite
+*.db
+*.h5
+*.hdf5
+*.pkl
+*.pickle
+
+# Ignore raw data directories (if you use a standard structure)
+data/raw/
+data/processed/
+
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
 .env
-.pytest_cache/
-.coverage
-htmlcov/
-dist/
-build/
-*.egg-info/
+.env.local
+*.pem
+*.key
+
+# ==========================================
+# IDEs & System Files
+# ==========================================
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# PyCharm / IntelliJ
+.idea/
+
+# macOS / Windows OS files
+.DS_Store
+Thumbs.db
