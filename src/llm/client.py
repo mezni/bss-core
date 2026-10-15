@@ -7,7 +7,7 @@ from llm.schemas import CRMContractResponse
 
 def ask_llm(prompt: str) -> str:
     """Send a prompt to an LLM and return its text response."""
-    model = os.getenv("OPENAI_MODEL", "gpt-5.5")
+    model = get_model_name()
 
     client = OpenAI(
         timeout=30.0,
@@ -41,14 +41,7 @@ def ask_crm_question(
         input=[
             {
                 "role": "system",
-                "content": (
-                    "Answer using only the supplied CRM context. "
-                    "Never invent contract terms or add-ons. "
-                    "If information is missing, leave the relevant "
-                    "lists empty and identify the missing information. "
-                    "Set found_in_context to true only when the "
-                    "context contains relevant contract information."
-                ),
+                "content": system_prompt,
             },
             {
                 "role": "user",

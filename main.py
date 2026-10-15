@@ -2,6 +2,8 @@ from llm.client import ask_crm_question
 
 
 def main() -> None:
+    print("CRM Agent - Contract and Add-on Retrieval")
+
     context = """
     Contract ID: C-100
     Renewal term: 12 months
