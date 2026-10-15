@@ -11,3 +11,17 @@
   introducing the full architecture immediately.
 - **Code State:** Initial application and test implemented.
 - **Next Step:** Connect Python to an LLM API.
+
+
+## Step 2: First LLM Call
+
+- **Goal:** Connect Python to an LLM API.
+- **Problem:** The application cannot generate model responses.
+- **Solution:** Added an LLM client using the OpenAI SDK and
+  environment-based model configuration.
+- **Trade-off:** Simple synchronous integration with one provider;
+  fallback and more robust error handling are deferred.
+- **Testing:** Added a mocked unit test for prompt forwarding
+  and response extraction.
+- **Code State:** Basic LLM integration implemented.
+- **Next Step:** Structured LLM output and validation.
