@@ -1,17 +1,19 @@
-
-from llm.client import ask_llm
+from llm.client import ask_crm_question
 
 
 def main() -> None:
-    prompt = (
-        "Explain what contract terms and active add-ons mean "
-        "in a CRM system. Use three bullet points."
+    context = """
+    Contract ID: C-100
+    Renewal term: 12 months
+    Active add-on: Premium Support
+    """
+
+    result = ask_crm_question(
+        question="What are the contract terms and active add-ons?",
+        context=context,
     )
 
-    answer = ask_llm(prompt)
-
-    print("\nLLM response:")
-    print(answer)
+    print(result.model_dump_json(indent=2))
 
 
 if __name__ == "__main__":

@@ -25,3 +25,18 @@
   and response extraction.
 - **Code State:** Basic LLM integration implemented.
 - **Next Step:** Structured LLM output and validation.
+
+
+## Step 3: Structured LLM Output
+
+- **Goal:** Produce predictable, validated CRM response objects.
+- **Problem:** Free-form model responses are difficult to consume
+  reliably in application code.
+- **Solution:** Added a Pydantic response schema and used the
+  LLM SDK's structured-output parsing.
+- **Trade-off:** Strict schemas improve consistency but require
+  schema maintenance and do not guarantee factual correctness.
+- **Testing:** Added tests for valid responses, missing fields,
+  and unexpected fields.
+- **Code State:** Structured response schema implemented.
+- **Next Step:** Prompt engineering and prompt versioning.
