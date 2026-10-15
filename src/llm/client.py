@@ -1,6 +1,7 @@
-import os
-
 from openai import OpenAI
+
+from llm.config import get_model_name, get_required_setting
+from llm.prompts import load_system_prompt
 from llm.schemas import CRMContractResponse
 
 
@@ -27,11 +28,13 @@ def ask_crm_question(
 ) -> CRMContractResponse:
     """Return a structured answer grounded in supplied context."""
     client = OpenAI(
+        api_key=get_required_setting("OPENAI_API_KEY"),
         timeout=30.0,
         max_retries=2,
     )
 
-    model = os.getenv("OPENAI_MODEL", "gpt-5.5")
+    model = get_model_name()
+    system_prompt = load_system_prompt()
 
     response = client.responses.parse(
         model=model,
