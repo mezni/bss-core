@@ -1,71 +1,49 @@
 # ==========================================
-# uv & Python Virtual Environments
+# Python / Bytecode / Virtual Environments
 # ==========================================
-.venv/
-venv/
-ENV/
-env/
-__pycache__/
-*.py[cod]
-*$py.class
-
-# ==========================================
-# Notebooks Directory Rules
-# ==========================================
-# Ignore all Jupyter checkpoints everywhere (including inside notebooks/)
-.ipynb_checkpoints/
-**/notebooks/.ipynb_checkpoints/
-
-# Optional: Ignore generated outputs/exports (PDFs, HTML exports)
-notebooks/*.html
-notebooks/*.pdf
-
-# Optional: Ignore temporary data files placed inside notebooks/
-notebooks/*.csv
-notebooks/*.json
-notebooks/data/
-
-# Virtual environment kernels created for Jupyter
-share/jupyter/runtime/
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+**/venv/
+**/.venv/
+**/env/
+**/.env/
 
 # ==========================================
-# Project & Data Exclusions
+# Packaging & Distribution
 # ==========================================
-# Ignore large dataset files
-*.csv
-*.parquet
-*.sqlite
-*.db
-*.h5
-*.hdf5
-*.pkl
-*.pickle
-
-# Ignore raw data directories (if you use a standard structure)
-data/raw/
-data/processed/
+**/build/
+**/dist/
+**/*.egg-info/
+**/.eggs/
+**/wheels/
 
 # ==========================================
-# Environment Variables & Secrets
+# Testing, Linting & Coverage
 # ==========================================
-.env
-.env.local
-*.pem
-*.key
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+**/.pytype/
+**/.tox/
+**/.cache/
+**/.coverage
+**/htmlcov/
+**/junit.xml
 
 # ==========================================
-# IDEs & System Files
+# Jupyter Notebooks
 # ==========================================
-# VS Code
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+**/.ipynb_checkpoints/
 
-# PyCharm / IntelliJ
-.idea/
-
-# macOS / Windows OS files
+# ==========================================
+# IDE / Editor & Environment Files
+# ==========================================
+**/.idea/
+**/.vscode/
+*.swp
+*.swo
 .DS_Store
 Thumbs.db
+.env
+.env.local
