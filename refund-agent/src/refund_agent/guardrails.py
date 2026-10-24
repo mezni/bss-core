@@ -26,10 +26,7 @@ def apply_guardrails(
             order_id=request.order_id,
             status=RefundStatus.ESCALATED,
             eligible_amount=Decimal("0.00"),
-            reason=(
-                "Damage evidence has not been verified. "
-                "Human review is required."
-            ),
+            reason=("Damage evidence has not been verified. Human review is required."),
             requires_human_approval=True,
         )
 
@@ -48,8 +45,6 @@ def apply_guardrails(
 
     # Escalated decisions must always require human approval.
     if decision.status == RefundStatus.ESCALATED:
-        return decision.model_copy(
-            update={"requires_human_approval": True}
-        )
+        return decision.model_copy(update={"requires_human_approval": True})
 
     return decision

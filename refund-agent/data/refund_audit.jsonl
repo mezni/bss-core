@@ -1,0 +1,11 @@
+{
+  "event_type": "human_review_resolved",
+  "timestamp": "2026-10-24T18:30:00+00:00",
+  "order_id": "4824",
+  "reviewer_id": "reviewer-123",
+  "approved": true,
+  "reason": "Reviewed and authorized.",
+  "previous_status": "escalated",
+  "new_status": "approved",
+  "eligible_amount": "149.99"
+}
