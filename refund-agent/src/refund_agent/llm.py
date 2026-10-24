@@ -1,6 +1,14 @@
 from dotenv import load_dotenv
 from langchain_core.prompts import ChatPromptTemplate
-from langchain_openai import ChatOpenAI
+from langchain_openai import 
+from openai import (
+    APIConnectionError,
+    APITimeoutError,
+    InternalServerError,
+    RateLimitError,
+)
+
+from refund_agent.reliability import retry_call
 
 from refund_agent.intent import IntentResult
 
@@ -35,4 +43,18 @@ def ask_llm(customer_message: str) -> str:
 
 
 def extract_intent(customer_message: str) -> IntentResult:
-    return intent_chain.invoke({"customer_message": customer_message})
+    """Extract intent, retrying transient OpenAI API failures."""
+
+    return retry_call(
+        lambda: intent_chain.invoke(
+            {"customer_message": customer_message}
+        ),
+        attempts=3,
+        delay_seconds=0.5,
+        retryable_exceptions=(
+            APITimeoutError,
+            APIConnectionError,
+            RateLimitError,
+            InternalServerError,
+        ),
+    )
