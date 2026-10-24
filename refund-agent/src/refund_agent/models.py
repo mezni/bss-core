@@ -23,6 +23,7 @@ class Order(BaseModel):
     item_price: Decimal = Field(gt=0)
     is_final_sale: bool = False
     is_damaged: bool = False
+    damage_evidence_verified: bool = False
     return_received: bool = False
 
 

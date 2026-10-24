@@ -4,12 +4,13 @@ from decimal import Decimal
 from refund_agent.models import Order
 
 MOCK_ORDERS: dict[str, Order] = {
-    "4821": Order(
-        order_id="4821",
-        delivery_date=date(2026, 10, 20),
-        item_price=Decimal("49.99"),
-        is_damaged=True,
-    ),
+"4821": Order(
+    order_id="4821",
+    delivery_date=date(2026, 10, 20),
+    item_price=Decimal("49.99"),
+    is_damaged=True,
+    damage_evidence_verified=True,
+),
     "4822": Order(
         order_id="4822",
         delivery_date=date(2026, 9, 1),
