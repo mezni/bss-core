@@ -1,0 +1,31 @@
+[project]
+name = "refund-agent-naive"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "M.Mezni", email = "mamezni@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=1.4.7",
+    "langchain-openai>=1.7.2",
+    "langgraph>=1.2.17",
+    "pydantic>=2.14.1",
+    "pydantic-settings>=2.16.1",
+]
+
+[project.scripts]
+refund-agent-naive = "refund_agent_naive:main"
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "mypy>=2.4.0",
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "ruff>=0.17.2",
+]
