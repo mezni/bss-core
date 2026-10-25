@@ -1,0 +1,6 @@
+{
+  "minimum_intent_accuracy": 0.90,
+  "minimum_order_id_accuracy": 0.95,
+  "minimum_reason_accuracy": 0.85,
+  "maximum_critical_errors": 0
+}
