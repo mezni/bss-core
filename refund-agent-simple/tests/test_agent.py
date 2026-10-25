@@ -52,13 +52,14 @@ def test_agent_passes_customer_message_to_model():
     assert messages[-1].content == "Refund order 42"
 
 
-def test_agent_has_lookup_order_tool_by_default():
+def test_agent_has_default_tools():
     llm = CapturingChatModel(responses=["ok"])
     agent = RefundAgent(llm=llm)
 
     agent.ask("Refund order 42")
 
-    assert any(tool.name == "lookup_order" for tool in llm.bound_tools)
+    names = {tool.name for tool in llm.bound_tools}
+    assert names == {"lookup_order", "check_refund_policy"}
 
 
 def test_agent_accepts_custom_tools():
