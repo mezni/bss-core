@@ -1,0 +1,7 @@
+
+{"id":"refund-001","customer_message":"The item arrived damaged. I want a refund for order 4821.","intent":"refund_request","order_id":"4821","summary":"Item arrived damaged","expected_status":"approved"}
+{"id":"refund-002","customer_message":"Can I return order 4822? It arrived a long time ago.","intent":"refund_request","order_id":"4822","summary":"Late return request","expected_status":"rejected"}
+{"id":"refund-003","customer_message":"I want a refund for final-sale order 4823.","intent":"refund_request","order_id":"4823","summary":"Final-sale refund request","expected_status":"rejected"}
+{"id":"refund-004","customer_message":"Please refund order 9999.","intent":"refund_request","order_id":"9999","summary":"Refund request for unknown order","expected_status":"escalated"}
+{"id":"refund-005","customer_message":"I want a refund but cannot find my order number.","intent":"refund_request","order_id":null,"summary":"Refund request without order ID","expected_status":"escalated"}
+{"id":"refund-006","customer_message":"Where is my order 4821?","intent":"order_inquiry","order_id":"4821","summary":"Order status inquiry","expected_status":"escalated"}
