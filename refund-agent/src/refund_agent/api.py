@@ -1,8 +1,11 @@
 
 from typing import Any
 
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, Request
 from pydantic import BaseModel, Field
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from slowapi.util import get_remote_address
 
 from refund_agent.agent import handle_customer_message
 from refund_agent.health import liveness_check, readiness_check
@@ -10,10 +13,18 @@ from refund_agent.metrics import agent_metrics
 from refund_agent.models import RefundDecision
 from refund_agent.security import require_api_key
 
+limiter = Limiter(key_func=get_remote_address)
+
 app = FastAPI(
     title="Refund Agent API",
     version="0.1.0",
     description="API for processing and evaluating refund requests.",
+)
+
+app.state.limiter = limiter
+app.add_exception_handler(
+    RateLimitExceeded,
+    _rate_limit_exceeded_handler,
 )
 
 
@@ -32,7 +43,6 @@ class RefundResponse(BaseModel):
 
 @app.get("/health/live")
 def health_live() -> dict[str, str]:
-    # Public liveness check for infrastructure monitoring.
     return liveness_check()
 
 
@@ -57,9 +67,13 @@ def get_metrics() -> dict[str, Any]:
     response_model=RefundResponse,
     dependencies=[Depends(require_api_key)],
 )
-def create_refund(request: RefundMessage) -> RefundResponse:
+@limiter.limit("10/minute")
+def create_refund(
+    request: Request,
+    payload: RefundMessage,
+) -> RefundResponse:
     decision, customer_response = handle_customer_message(
-        customer_message=request.customer_message,
+        customer_message=payload.customer_message,
     )
 
     return RefundResponse(
