@@ -59,7 +59,7 @@ def test_agent_has_default_tools():
     agent.ask("Refund order 42")
 
     names = {tool.name for tool in llm.bound_tools}
-    assert names == {"lookup_order", "check_refund_policy"}
+    assert names == {"lookup_order", "check_refund_policy", "issue_refund"}
 
 
 def test_agent_accepts_custom_tools():

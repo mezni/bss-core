@@ -4,7 +4,11 @@ from langchain_core.messages import HumanMessage
 
 from refund_agent_simple.llm import get_llm
 from refund_agent_simple.prompts import REFUND_SYSTEM_PROMPT
-from refund_agent_simple.tools import check_refund_policy, lookup_order
+from refund_agent_simple.tools import (
+    check_refund_policy,
+    issue_refund,
+    lookup_order,
+)
 
 
 class RefundAgent:
@@ -15,7 +19,9 @@ class RefundAgent:
     ) -> None:
         self._agent = create_agent(
             model=llm or get_llm(),
-            tools=[lookup_order, check_refund_policy] if tools is None else tools,
+            tools=[lookup_order, check_refund_policy, issue_refund]
+            if tools is None
+            else tools,
             system_prompt=REFUND_SYSTEM_PROMPT,
         )
 
