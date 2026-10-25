@@ -55,3 +55,20 @@ class Settings(BaseSettings):
 def get_settings() -> Settings:
     """Return cached application settings."""
     return Settings()
+
+
+
+customer_service_api_key: SecretStr | None = Field(
+    default=None,
+    alias="REFUND_AGENT_CUSTOMER_API_KEY",
+)
+
+refund_reviewer_api_key: SecretStr | None = Field(
+    default=None,
+    alias="REFUND_AGENT_REVIEWER_API_KEY",
+)
+
+admin_api_key: SecretStr | None = Field(
+    default=None,
+    alias="REFUND_AGENT_ADMIN_API_KEY",
+)
