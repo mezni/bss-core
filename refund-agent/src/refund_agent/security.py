@@ -1,12 +1,10 @@
 
 import hmac
-import os
 
-from dotenv import load_dotenv
 from fastapi import HTTPException, Security, status
 from fastapi.security import APIKeyHeader
 
-load_dotenv()
+from refund_agent.config import get_settings
 
 api_key_header = APIKeyHeader(
     name="X-API-Key",
@@ -17,17 +15,20 @@ api_key_header = APIKeyHeader(
 def require_api_key(
     api_key: str | None = Security(api_key_header),
 ) -> None:
-    configured_key = os.getenv("REFUND_AGENT_API_KEY")
+    settings = get_settings()
+    configured_secret = settings.refund_agent_api_key
 
-    if not configured_key:
+    if configured_secret is None:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="API authentication is not configured.",
         )
 
+    expected_key = configured_secret.get_secret_value()
+
     if api_key is None or not hmac.compare_digest(
         api_key,
-        configured_key,
+        expected_key,
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
