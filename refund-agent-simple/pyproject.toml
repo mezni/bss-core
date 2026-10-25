@@ -1,0 +1,22 @@
+[project]
+name = "refund-agent-simple"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "M.Mezni", email = "mamezni@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "langchain>=1.4.7",
+    "langchain-openai>=1.7.2",
+    "pydantic-settings>=2.16.1",
+    "python-dotenv>=1.2.4",
+]
+
+[project.scripts]
+refund-agent-simple = "refund_agent_simple:main"
+
+[build-system]
+requires = ["uv_build>=0.12.15,<0.13.0"]
+build-backend = "uv_build"
