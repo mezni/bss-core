@@ -1,0 +1,34 @@
+[
+  {
+    "order_id": "4821",
+    "item": "Wireless Headphones",
+    "amount_usd": 89.99,
+    "days_since_purchase": 12,
+    "digital": false,
+    "condition": "damaged on arrival"
+  },
+  {
+    "order_id": "4822",
+    "item": "Python Crash Course (ebook)",
+    "amount_usd": 29.99,
+    "days_since_purchase": 3,
+    "digital": true,
+    "condition": "downloaded"
+  },
+  {
+    "order_id": "4823",
+    "item": "Standing Desk",
+    "amount_usd": 349.00,
+    "days_since_purchase": 45,
+    "digital": false,
+    "condition": "used"
+  },
+  {
+    "order_id": "4824",
+    "item": "Mechanical Keyboard",
+    "amount_usd": 149.00,
+    "days_since_purchase": 5,
+    "digital": false,
+    "condition": "unused"
+  }
+]
