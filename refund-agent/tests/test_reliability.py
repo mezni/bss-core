@@ -74,9 +74,6 @@ def test_negative_delay_is_rejected():
         retry_call(lambda: "success", delay_seconds=-1)
 
 
-
-
-
 def test_retry_call_raises_after_all_attempts():
     calls = 0
 

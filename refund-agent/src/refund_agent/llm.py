@@ -46,9 +46,7 @@ def extract_intent(customer_message: str) -> IntentResult:
     """Extract intent, retrying transient OpenAI API failures."""
 
     return retry_call(
-        lambda: intent_chain.invoke(
-            {"customer_message": customer_message}
-        ),
+        lambda: intent_chain.invoke({"customer_message": customer_message}),
         attempts=3,
         delay_seconds=0.5,
         retryable_exceptions=(

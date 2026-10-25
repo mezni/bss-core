@@ -1,4 +1,3 @@
-
 import json
 from pathlib import Path
 
@@ -13,9 +12,7 @@ def main() -> None:
     thresholds_path = Path("evals/thresholds.json")
 
     cases = load_intent_cases(dataset)
-    thresholds = json.loads(
-        thresholds_path.read_text(encoding="utf-8")
-    )
+    thresholds = json.loads(thresholds_path.read_text(encoding="utf-8"))
 
     report = evaluate_intent_cases(
         cases=cases,

@@ -1,4 +1,3 @@
-
 from typing import Any
 
 
@@ -32,11 +31,7 @@ def check_thresholds(
     results = {}
 
     for metric, (actual, threshold, operator) in checks.items():
-        passed = (
-            actual >= threshold
-            if operator == ">="
-            else actual <= threshold
-        )
+        passed = actual >= threshold if operator == ">=" else actual <= threshold
 
         results[metric] = {
             "actual": actual,
