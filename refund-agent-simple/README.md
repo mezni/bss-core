@@ -56,6 +56,16 @@ uv run python scripts/try_agent.py
 uv run pytest -q
 ```
 
+## Evaluations
+
+```bash
+uv run python scripts/run_evals.py
+```
+
+The small eval suite checks the policy decisions against `evals/refund_cases.jsonl`
+and fails on regressions or unexpected refund approvals.
+
+
 ## Structure
 
 ```

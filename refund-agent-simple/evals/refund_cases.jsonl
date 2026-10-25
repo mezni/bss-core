@@ -1,0 +1,5 @@
+{"id":"refund-001","customer_message":"The item arrived damaged. I want a refund for order 4821.","order_id":"4821","expected_outcome":"refunded"}
+{"id":"refund-002","customer_message":"Can I get a refund for my ebook, order 4822?","order_id":"4822","expected_outcome":"rejected"}
+{"id":"refund-003","customer_message":"I want a refund for order 4823, the desk I bought.","order_id":"4823","expected_outcome":"rejected"}
+{"id":"refund-004","customer_message":"Please refund my unused keyboard, order 4824.","order_id":"4824","expected_outcome":"pending_approval"}
+{"id":"refund-005","customer_message":"Refund order 9999 please.","order_id":"9999","expected_outcome":"error"}
