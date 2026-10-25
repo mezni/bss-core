@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 from decimal import Decimal
 from enum import StrEnum
 
@@ -28,3 +28,23 @@ class PolicyResult(BaseModel):
     decision: Decision
     reason: str
     max_refund: Decimal = Decimal("0")
+
+
+class RefundReason(StrEnum):
+    DEFECTIVE = "defective"
+    NOT_AS_DESCRIBED = "not_as_described"
+    CHANGED_MIND = "changed_mind"
+    LATE = "late"
+    OTHER = "other"
+
+
+class Refund(BaseModel):
+    model_config = ConfigDict(frozen=True)
+
+    refund_id: str
+    order_id: str
+    customer_id: str
+    amount: Decimal
+    reason: RefundReason
+    approved_by: str  # "auto" or the manager's id
+    created_at: datetime
