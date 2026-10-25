@@ -1,14 +1,14 @@
-from refund_agent.logging_config import configure_logging
 from refund_agent.agent import handle_customer_message
+from refund_agent.observability import configure_observability
 
-configure_logging()
 
-message = input("Customer message: ")
+def main() -> None:
+    configure_observability()
+    _, response = handle_customer_message(
+        "The item arrived damaged. Please refund order 4821."
+    )
+    print(response)
 
-decision, response = handle_customer_message(message)
 
-print("\n--- Refund Decision ---")
-print(decision.model_dump_json(indent=2))
-
-print("\n--- Customer Response ---")
-print(response)
+if __name__ == "__main__":
+    main()
