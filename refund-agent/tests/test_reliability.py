@@ -72,3 +72,24 @@ def test_attempts_must_be_positive():
 def test_negative_delay_is_rejected():
     with pytest.raises(ValueError, match="cannot be negative"):
         retry_call(lambda: "success", delay_seconds=-1)
+
+
+
+
+
+def test_retry_call_raises_after_all_attempts():
+    calls = 0
+
+    def failing_operation():
+        nonlocal calls
+        calls += 1
+        raise TimeoutError("Service timed out")
+
+    with pytest.raises(TimeoutError):
+        retry_call(
+            failing_operation,
+            attempts=3,
+            delay_seconds=0,
+        )
+
+    assert calls == 3
