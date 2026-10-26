@@ -8,9 +8,7 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "dotenv>=0.9.9",
-    "langchain>=1.4.7",
-    "langchain-openai>=1.7.2",
+    "pydantic>=2.14.1",
 ]
 
 [project.scripts]
@@ -20,8 +18,25 @@ refund-agent-ref = "refund_agent_ref:main"
 requires = ["uv_build>=0.12.15,<0.13.0"]
 build-backend = "uv_build"
 
+[tool.uv.build-backend]
+module-name = "app"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "evals", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
 [dependency-groups]
 dev = [
+    "httpx>=0.28.1",
+    "mypy>=2.4.0",
     "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.1",
     "ruff>=0.17.2",
 ]
