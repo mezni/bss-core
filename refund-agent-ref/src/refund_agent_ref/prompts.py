@@ -1,4 +1,4 @@
-REFUND_SYSTEM_PROMPT = """You are a refund support agent.
+refund_system_prompt = """You are a refund support agent.
 
 Your job:
 - Understand the customer's refund request.
