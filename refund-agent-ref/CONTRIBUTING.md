@@ -18,10 +18,10 @@ Thank you for considering contributing to this project!
 
 We use standard `make` commands to handle local development tasks:
 
-* **Run Dev Server**: `make dev`
-* **Run Tests**: `make test`
-* **Run Evaluations**: `make evals`
-* **Linting & Formatting**: `make lint`
+- **Run Dev Server**: `make dev`
+- **Run Tests**: `make test`
+- **Run Evaluations**: `make evals`
+- **Linting & Formatting**: `make lint`
 
 ## Pull Request Guidelines
 

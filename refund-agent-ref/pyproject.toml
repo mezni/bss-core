@@ -3,26 +3,15 @@ name = "refund-agent-ref"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-authors = [
-    { name = "M.Mezni", email = "mamezni@gmail.com" }
-]
 requires-python = ">=3.12"
 dependencies = [
+    "fastapi>=0.162.0",
     "pydantic>=2.14.1",
+    "uvicorn>=0.54.0",
 ]
 
-[project.scripts]
-refund-agent-ref = "refund_agent_ref:main"
-
-[build-system]
-requires = ["uv_build>=0.12.15,<0.13.0"]
-build-backend = "uv_build"
-
-[tool.uv.build-backend]
-module-name = "app"
-
 [tool.pytest.ini_options]
-pythonpath = ["."]
+pythonpath = ["src"]
 testpaths = ["tests"]
 
 [tool.ruff]
@@ -38,5 +27,5 @@ dev = [
     "mypy>=2.4.0",
     "pytest>=9.1.1",
     "pytest-asyncio>=1.4.1",
-    "ruff>=0.17.2",
+    "ruff>=0.17.3",
 ]

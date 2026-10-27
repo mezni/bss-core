@@ -1,7 +1,7 @@
 .PHONY: dev test evals lint
 
 dev:
-	uv run uvicorn app.main:app --reload
+	uv run uvicorn main:app --app-dir src --reload
 
 test:
 	uv run pytest
