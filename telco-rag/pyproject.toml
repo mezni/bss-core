@@ -5,6 +5,7 @@ description = "A telecom knowledge assistant powered by retrieval-augmented gene
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "openai>=3.40.0",
     "python-dotenv",
     "pyyaml>=6.0.3",
     "streamlit",
