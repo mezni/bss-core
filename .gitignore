@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.venv/
+.env/
+.env.example
+.pytest_cache/
+.coverage
+
+# Environment variables
+.env*
+
+# IDE
+.vscode/
+.idea/
+
+# Database
+*.db
+
+# OS
+.DS_Store
