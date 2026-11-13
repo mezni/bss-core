@@ -10,16 +10,14 @@ from src.modules.customers.schemas import CustomerCreate, CustomerResponse
 router = APIRouter(tags=["Customers"])
 
 
-@router.post(
-    "/", response_model=CustomerResponse, status_code=status.HTTP_201_CREATED
-)
+@router.post("/", response_model=CustomerResponse, status_code=status.HTTP_201_CREATED)
 def create_customer(
     customer_in: CustomerCreate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-  repo = CustomerRepository(db)
-  return repo.create(customer_in, owner_id=current_user.id)
+    repo = CustomerRepository(db)
+    return repo.create(customer_in, owner_id=current_user.id)
 
 
 @router.get("/", response_model=list[CustomerResponse])
@@ -29,5 +27,5 @@ def list_customers(
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-  repo = CustomerRepository(db)
-  return repo.get_all(owner_id=current_user.id, skip=skip, limit=limit)
+    repo = CustomerRepository(db)
+    return repo.get_all(owner_id=current_user.id, skip=skip, limit=limit)
